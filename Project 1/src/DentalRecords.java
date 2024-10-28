@@ -18,7 +18,7 @@ public class DentalRecords {
     public static void main(String[] args) {
         Scanner scanner = new Scanner (System.in) ;
 
-        System.out.println("Welcome to the Floridian Tooth Records");
+        System.out.println("Welcome to the Floridian Tooth Records");// welcome message
         System.out.println("---------------------------------------");
 
 
@@ -34,8 +34,9 @@ public class DentalRecords {
         }
 
         char menuChoices;
-        do{
-            menuChoices  = getMenuChoices(scanner);
+
+        do {
+            menuChoices = getMenuChoices(scanner);
             switch (menuChoices) {
                 case 'P':
                     printFamilyTeeth(family, teethData, familySize);
@@ -48,11 +49,9 @@ public class DentalRecords {
                     break;
                 case 'X':
                     System.out.println("Exiting the Floridian Tooth Records :-)");
-                default:
-                    System.out.println("Invalid menu option, try again");
             }
-        }while (menuChoices != 'X');
 
+        } while (menuChoices != 'X') ;
 
     }// End of Main Method
 
@@ -139,40 +138,51 @@ public class DentalRecords {
         }// end of first for loop
     }//end of printTeethRecords method
 
-    private static void extractTooth(Scanner scanner,char[][][] teethData, String[] family) {
+    private static void extractTooth(Scanner scanner, char[][][] teethData, String[] family) {
 
-        System.out.print("Which family member                         : ");
-        String memberName = scanner.next();
-        int memberIndex = findFamilyMember(family, memberName);
+        int memberIndex = -1;
+        while (memberIndex == -1) {
+            System.out.print("Which family member                         : ");
+            String memberName = scanner.next();
+            memberIndex = findFamilyMember(family, memberName);
 
-        if (memberIndex == -1) {//check if valid family member was found
-            System.out.println("Invalid family member, try again");
-            return;
-        }//end of if statement
-
-        System.out.print("Which tooth layer (U)pper or (L)ower        : ");
-        char layer = scanner.next().toUpperCase().charAt(0);
-
-        int row = (layer == 'U') ? 0 : (layer == 'L') ? 1 : -1;
-        if (row == -1) {
-            System.out.println("Invalid layer, try again");
-            return;
+            if (memberIndex == -1) { // Invalid family member
+                System.out.println("Invalid family member, try again.");
+            }
         }
 
-        System.out.print("Which tooth number                          : ");
-        int toothNum = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        int row = -1;
+        while (row == -1) {
+            System.out.print("Which tooth layer (U)pper or (L)ower        : ");
+            char layer = scanner.next().toUpperCase().charAt(0);
 
-        if (toothNum < 1 || toothNum > MAX_TEETH) {
-            System.out.println("Invalid tooth number, try again");
-            return;
+            row = (layer == 'U') ? 0 : (layer == 'L') ? 1 : -1;
+            if (row == -1) {
+                System.out.println("Invalid layer, try again.");
+            }
         }
 
-        if (teethData[memberIndex][row][toothNum - 1] == 'M') {
-            System.out.println("Missing tooth, try again");
-        } else {
-            teethData[memberIndex][row][toothNum - 1] = 'M';
-            System.out.println("Tooth extracted successfully.");
+        boolean validToothSelected = false;
+        while (!validToothSelected) {
+            System.out.print("Which tooth number                          : ");
+            int toothNum = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            // Validate tooth number range
+            if (toothNum < 1 || toothNum > MAX_TEETH) {
+                System.out.println("Invalid tooth number, try again.");
+                continue;
+            }
+
+            // Check if the selected tooth is already missing
+            if (teethData[memberIndex][row][toothNum - 1] == 'M') {
+                System.out.println("This tooth is already marked as missing. Please choose a different tooth.");
+            } else {
+                // Mark the tooth as missing
+                teethData[memberIndex][row][toothNum - 1] = 'M';
+                System.out.println("Tooth extracted successfully.");
+                validToothSelected = true; // Exit the loop after successful extraction
+            }
         }
     }//end of the extractTooth method
 
