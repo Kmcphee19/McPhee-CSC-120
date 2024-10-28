@@ -1,3 +1,8 @@
+/**
+ *
+ * @author Kiori McPhee
+ */
+import java.util.Scanner;
 import java.util.Scanner;
 
 public class DentalRecords {
@@ -53,6 +58,7 @@ public class DentalRecords {
 
 
     static int getFamilySize (Scanner scanner){
+
         int size = 0;
         while(size < 1 || size > MAX_FAMILY) {
             System.out.println("Please enter the number of people in vour family: ");
@@ -67,11 +73,14 @@ public class DentalRecords {
 
 
     static String getName(Scanner scanner, int memberIndex) {
+
             System.out.println("Please enter the name for family member" + (memberIndex + 1) + ": ");
             return scanner.next();
         }// end of getName method
 
+
     static char [] getTeeth(Scanner scanner, String layer, String getName){//
+
         char[] teeth = new char [MAX_TEETH];
         boolean validInput = false;
         while (!validInput){
@@ -100,11 +109,14 @@ public class DentalRecords {
     }// end of the getTeeth method
 
     static char getMenuChoices (Scanner scanner){
-            System.out.print(" (P)rint, (E)xtract, (R)oot, e(X)it: ");
-            return scanner.next().toUpperCase().charAt (0);
+
+        System.out.print(" (P)rint, (E)xtract, (R)oot, e(X)it: ");
+        return scanner.next().toUpperCase().charAt (0);
 }//end of the getMenu0fChoices method
 
+
     private static void printFamilyTeeth(String[] family, char[][][] teethData, int familySize) {
+
         for (int index = 0; index < familySize; index++) {
             System.out.println(family[index]);
             System.out.print("  Uppers: ");
@@ -128,12 +140,14 @@ public class DentalRecords {
     }//end of printTeethRecords method
 
     private static void extractTooth(Scanner scanner,char[][][] teethData, String[] family) {
+
         System.out.print("Which family member                         : ");
         String memberName = scanner.next();
         int memberIndex = findFamilyMember(family, memberName);
-        if (memberIndex == -1) {
+
+        if (memberIndex == -1) {//check if valid family member was found
             System.out.println("Invalid family member, try again");
-return;
+            return;
         }//end of if statement
 
         System.out.print("Which tooth layer (U)pper or (L)ower        : ");
@@ -162,7 +176,10 @@ return;
         }
     }//end of the extractTooth method
 
+
+
     private static int findFamilyMember(String[] family, String memberName) {
+
         for (int index = 0; index < family.length; index++) {
             if (family[index] != null && family[index].equalsIgnoreCase(memberName)) {
                 return index;
@@ -172,6 +189,7 @@ return;
     }//end of findFamilyMember method
 
     private static void reportRootCanal(char[][][] teethData, int familySize) {
+
         int iCount = 0, bCount = 0, mCount = 0;
         for (char[][] personTeeth : teethData) {  // corrected
             for (int row = 0; row < 2; row++) {
@@ -193,5 +211,6 @@ return;
                 System.out.printf("Another root canal at %.2f\n", root2);
             }//end of if-else
         }//end of reportRootCanal method
+
 
 }// End of Public class
