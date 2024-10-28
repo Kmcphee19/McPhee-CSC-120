@@ -49,8 +49,13 @@ public class DentalRecords {
                     break;
                 case 'X':
                     System.out.println("Exiting the Floridian Tooth Records :-)");
-            }
 
+                default:
+                    if (menuChoices !='X'){
+                    System.out.println("Invalid menu option, try again");
+                }
+                        break;
+            }
         } while (menuChoices != 'X') ;
 
     }// End of Main Method
