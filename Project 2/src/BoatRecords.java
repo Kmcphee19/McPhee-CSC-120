@@ -14,7 +14,7 @@ public class BoatRecords {
     // maximum values for the inputs
     public static final double MAX_PURCHASE_PRICE = 1000000.0;
     public static final double MAX_LENGTH_IN_FEET = 100.0;
-    public static final String DATA_FILE_NAME = "FleetData";
+    public static final String DATA_FILE_NAME = "FleetData.db";
 
     private static final Scanner keyboard = new Scanner(System.in);
 
@@ -26,13 +26,13 @@ public class BoatRecords {
     public static void main(String[] args) {
         ArrayList<Boat> boatList;
         boatList = new ArrayList<>();
-if (args.length >0) {
-    String fleetData = args[0];
+        if (args.length >0) {
+            String fleetData = args[0];
 
-    readCSV(fleetData, boatList);
-}else {
-    loadDBFileSavedData(boatList);
-}// end of if else statement
+            readCSV(fleetData, boatList);
+        } else {
+            loadDBFileSavedData(boatList);
+        }// end of if else statement
 
 
         System.out.println("Welcome to the Fleet Management System"); // Welcome message
@@ -152,6 +152,11 @@ if (args.length >0) {
      */
 
     private static void loadDBFileSavedData(ArrayList<Boat> boatList){
+        File dbFile = new File(DATA_FILE_NAME);
+        if (!dbFile.exists()) {
+            System.out.println("No saved fleet data found.");
+            return;
+        }
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(DATA_FILE_NAME))){
             boatList.clear();
             List<Boat> loadedFleet = (List<Boat>) objectInputStream.readObject();
@@ -171,6 +176,7 @@ if (args.length >0) {
     private static void saveFleetDataToDB(ArrayList<Boat> boatList){
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(DATA_FILE_NAME))) {
             objectOutputStream.writeObject(boatList);
+            System.out.println("Fleet data successfully saved to " + DATA_FILE_NAME + ".");
 
         }catch (IOException e){
             System.out.println("Error saving to data base file: " + e.getMessage());

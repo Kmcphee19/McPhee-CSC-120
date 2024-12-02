@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 
 public class Boat implements Serializable {
+    private static final long serialVersionUID = 1L; // Recommended for Serializable classes
     public enum BoatType {SAILING, POWER}
 
     private BoatType type;
