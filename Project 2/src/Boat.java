@@ -107,7 +107,13 @@ public class Boat implements Serializable {
     public double getExpenses(){
         return expenses;
     }// end of getExpenses
-
+    /**
+     * Adds old expenses to new expenses
+     *
+     */
+public void updateExpenses( double newExpenses){
+        expenses = expenses + newExpenses;
+}// end of the updateExpenses
     /**
      * Returns a formatted string representation of the boat's details.
      *

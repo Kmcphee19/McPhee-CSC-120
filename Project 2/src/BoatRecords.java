@@ -176,7 +176,7 @@ public class BoatRecords {
     private static void saveFleetDataToDB(ArrayList<Boat> boatList){
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(DATA_FILE_NAME))) {
             objectOutputStream.writeObject(boatList);
-            System.out.println("Fleet data successfully saved to " + DATA_FILE_NAME + ".");
+
 
         }catch (IOException e){
             System.out.println("Error saving to data base file: " + e.getMessage());
@@ -201,7 +201,7 @@ public class BoatRecords {
                 keyboard.nextLine(); // Consume the newline character
                 if (boat.canSpend(amount)) {
                     boat.spend(amount);
-                    System.out.printf("Expense authorized, $%.2f spent.%n", amount);
+                    System.out.printf("Expense authorized, $%.2f spent.%n", boat.getExpenses());
                 } else {
                     System.out.printf("Expense not permitted, only $%.2f left to spend.%n", boat.getRemainingBudget());
                 }
